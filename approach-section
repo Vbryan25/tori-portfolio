@@ -1,0 +1,246 @@
+"use client"
+
+import { useState } from "react"
+
+const flows = {
+  "design-systems": {
+    label: "Design Systems",
+    description:
+      "A systematic approach to building scalable, consistent UI foundations that empower product teams.",
+    steps: [
+      {
+        id: "ds-1",
+        title: "Audit & Discovery",
+        description:
+          "Inventory existing UI patterns, identify inconsistencies, and map the current design landscape across products.",
+        detail: "Stakeholder interviews, UI audit, gap analysis",
+      },
+      {
+        id: "ds-2",
+        title: "Token Architecture",
+        description:
+          "Define the foundational layer: color, spacing, typography, and motion as platform-agnostic design tokens.",
+        detail: "Semantic tokens, theme structure, naming conventions",
+      },
+      {
+        id: "ds-3",
+        title: "Component Design",
+        description:
+          "Build composable, accessible primitives using atomic design principles. Favor composition over configuration.",
+        detail: "Figma components, API design, variant mapping",
+      },
+      {
+        id: "ds-4",
+        title: "Documentation",
+        description:
+          "Treat docs as a product. Create clear usage guidelines, interactive examples, and contribution workflows.",
+        detail: "Storybook, usage guides, do/don't patterns",
+      },
+      {
+        id: "ds-5",
+        title: "Governance & Scale",
+        description:
+          "Establish contribution models, versioning strategies, and adoption metrics to sustain the system long-term.",
+        detail: "RFC process, analytics, deprecation strategy",
+      },
+    ],
+  },
+  "product-design": {
+    label: "Product Design",
+    description:
+      "A human-centered process for designing products that are intuitive, useful, and delightful.",
+    steps: [
+      {
+        id: "pd-1",
+        title: "Research & Empathy",
+        description:
+          "Understand users deeply through interviews, data analysis, and journey mapping before touching any pixels.",
+        detail: "User interviews, analytics review, personas",
+      },
+      {
+        id: "pd-2",
+        title: "Define & Frame",
+        description:
+          "Synthesize research into clear problem statements, success metrics, and design principles to guide the work.",
+        detail: "HMW statements, jobs-to-be-done, OKRs",
+      },
+      {
+        id: "pd-3",
+        title: "Explore & Ideate",
+        description:
+          "Diverge broadly with sketches, wireframes, and concepts. Explore the solution space before converging.",
+        detail: "Crazy 8s, wireframes, concept testing",
+      },
+      {
+        id: "pd-4",
+        title: "Design & Prototype",
+        description:
+          "Craft high-fidelity designs and interactive prototypes. Sweat the details in layout, motion, and micro-interactions.",
+        detail: "Hi-fi mockups, interaction design, motion",
+      },
+      {
+        id: "pd-5",
+        title: "Test & Iterate",
+        description:
+          "Validate with real users, measure against success metrics, and iterate rapidly based on feedback and data.",
+        detail: "Usability testing, A/B tests, iteration cycles",
+      },
+    ],
+  },
+}
+
+type FlowKey = keyof typeof flows
+
+export function ApproachSection() {
+  const [activeFlow, setActiveFlow] = useState<FlowKey>("design-systems")
+  const currentFlow = flows[activeFlow]
+
+  return (
+    <section
+      id="approach"
+      className="border-t border-border"
+      aria-labelledby="approach-heading"
+    >
+      <div className="mx-auto max-w-6xl px-6 py-20 md:py-32">
+        {/* Header */}
+        <div className="mb-12 md:mb-16">
+          <p className="font-mono text-xs uppercase tracking-widest text-accent">
+            Approach
+          </p>
+          <h2
+            id="approach-heading"
+            className="mt-3 text-3xl font-semibold tracking-tight text-foreground md:text-4xl"
+          >
+            How I Work
+          </h2>
+        </div>
+
+        {/* Toggle */}
+        <div className="mb-12 flex flex-col gap-6 md:mb-16 md:flex-row md:items-center md:justify-between">
+          <div
+            className="inline-flex rounded-full border border-border bg-card p-1"
+            role="tablist"
+            aria-label="Approach type"
+          >
+            {(Object.keys(flows) as FlowKey[]).map((key) => (
+              <button
+                key={key}
+                role="tab"
+                aria-selected={activeFlow === key}
+                onClick={() => setActiveFlow(key)}
+                className={`rounded-full px-5 py-2 font-mono text-xs uppercase tracking-wider transition-all ${
+                  activeFlow === key
+                    ? "bg-foreground text-background"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {flows[key].label}
+              </button>
+            ))}
+          </div>
+          <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
+            {currentFlow.description}
+          </p>
+        </div>
+
+        {/* Flow Map */}
+        <div className="relative" aria-live="polite">
+          {/* Desktop: Horizontal Flow */}
+          <div className="hidden lg:block">
+            <div className="relative flex items-start">
+              {currentFlow.steps.map((step, index) => (
+                <div key={step.id} className="flex flex-1 items-start">
+                  {/* Node + Content */}
+                  <div className="flex w-full flex-col items-center text-center">
+                    {/* Connector line + Node */}
+                    <div className="relative flex w-full items-center justify-center">
+                      {/* Left connector */}
+                      {index > 0 && (
+                        <div className="absolute left-0 right-1/2 top-1/2 h-px bg-border" />
+                      )}
+                      {/* Right connector */}
+                      {index < currentFlow.steps.length - 1 && (
+                        <div className="absolute left-1/2 right-0 top-1/2 h-px bg-border" />
+                      )}
+                      {/* Arrow on right connector */}
+                      {index < currentFlow.steps.length - 1 && (
+                        <div className="absolute right-0 top-1/2 -translate-y-1/2">
+                          <svg
+                            width="8"
+                            height="12"
+                            viewBox="0 0 8 12"
+                            fill="none"
+                            className="text-border"
+                          >
+                            <path
+                              d="M1 1L6 6L1 11"
+                              stroke="currentColor"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </div>
+                      )}
+                      {/* Node circle */}
+                      <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full border-2 border-accent bg-card font-mono text-xs font-semibold text-accent shadow-sm">
+                        {String(index + 1).padStart(2, "0")}
+                      </div>
+                    </div>
+
+                    {/* Content below node */}
+                    <div className="mt-6 px-2">
+                      <h3 className="text-sm font-semibold tracking-tight text-foreground">
+                        {step.title}
+                      </h3>
+                      <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                        {step.description}
+                      </p>
+                      <p className="mt-3 font-mono text-[10px] uppercase tracking-wider text-accent">
+                        {step.detail}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Mobile/Tablet: Vertical Flow */}
+          <div className="lg:hidden">
+            <div className="relative flex flex-col">
+              {currentFlow.steps.map((step, index) => (
+                <div key={step.id} className="relative flex gap-6">
+                  {/* Vertical line + Node */}
+                  <div className="flex flex-col items-center">
+                    {/* Node circle */}
+                    <div className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-accent bg-card font-mono text-xs font-semibold text-accent">
+                      {String(index + 1).padStart(2, "0")}
+                    </div>
+                    {/* Vertical connector */}
+                    {index < currentFlow.steps.length - 1 && (
+                      <div className="w-px flex-1 bg-border" />
+                    )}
+                  </div>
+
+                  {/* Content */}
+                  <div className="pb-10">
+                    <h3 className="text-sm font-semibold tracking-tight text-foreground">
+                      {step.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                      {step.description}
+                    </p>
+                    <p className="mt-3 font-mono text-[10px] uppercase tracking-wider text-accent">
+                      {step.detail}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
