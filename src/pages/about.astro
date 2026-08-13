@@ -1,0 +1,81 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import photo1 from '../assets/about/photo-1.jpg';
+import photo2 from '../assets/about/photo-2.jpg';
+import photo3 from '../assets/about/photo-3.jpg';
+import photo4 from '../assets/about/photo-4.jpg';
+import Bonzo from '../components/Bonzo.astro';
+
+const photos = [photo1, photo2, photo3, photo4];
+
+const skills = [
+  '5 years designing in EdTech',
+  'Using Figma MCP and LLM code tools to build prototype-forward designs across all digital touchpoints',
+  'Expertise in design systems + agentic design system work flows',
+  'Authored PRDs, design-dev handoff docs, and design system usage documentation',
+];
+
+const interests = [
+  'Always exploring new tools and ways to create',
+  'Currently learning how to play the drums',
+  'Built my first PC in 2025 and love using it to play open world and combat games',
+  'Studying the history of the golden ratio and its relevancy today in design',
+];
+---
+
+<Layout
+  title="About"
+  description="Tori Bryan — edtech product designer, questioning everything all the time."
+>
+  <section class="mx-auto max-w-2xl px-6 py-20">
+    <div class="grid grid-cols-2 gap-2 overflow-hidden rounded-2xl">
+      {
+        photos.map((photo, i) => (
+          <Image
+            src={photo}
+            alt=""
+            width={400}
+            height={400}
+            class:list={['aspect-square w-full object-cover', i === 0 && 'rounded-tl-2xl', i === 1 && 'rounded-tr-2xl', i === 2 && 'rounded-bl-2xl', i === 3 && 'rounded-br-2xl']}
+          />
+        ))
+      }
+    </div>
+
+    <h1 class="mt-8 font-display text-4xl text-ink">tori bryan</h1>
+    <p class="mt-2 text-ink-tertiary">edtech product designer</p>
+    <p class="text-sm text-ink-tertiary italic">questioning everything all the time</p>
+
+    <p class="mt-6 text-lg text-ink-secondary">
+      Hi there! I'm Tori Bryan, currently working as a Staff Product Designer @ Proctorio. I am
+      driven by design work that has real social impact and am considered a relentless problem
+      solver when it comes to aligning business goals with user needs.
+    </p>
+
+    <div class="mt-10 grid gap-6 sm:grid-cols-2">
+      <div class="rounded-2xl border border-border bg-surface-muted/60 p-6">
+        <h2 class="font-display text-lg text-ink">skills</h2>
+        <ul class="mt-4 flex flex-col gap-3 text-sm text-ink-secondary">
+          {skills.map((skill) => <li>{skill}</li>)}
+        </ul>
+      </div>
+      <div class="rounded-2xl border border-border bg-surface-muted/60 p-6">
+        <h2 class="font-display text-lg text-ink">interests</h2>
+        <ul class="mt-4 flex flex-col gap-3 text-sm text-ink-secondary">
+          {interests.map((interest) => <li>{interest}</li>)}
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-10 flex items-center justify-between rounded-2xl border border-border p-6">
+      <a
+        href="mailto:toribryan.design@gmail.com"
+        class="text-sm text-ink-secondary transition-colors hover:text-ink"
+      >
+        toribryan.design@gmail.com
+      </a>
+      <Bonzo />
+    </div>
+  </section>
+</Layout>

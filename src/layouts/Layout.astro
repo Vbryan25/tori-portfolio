@@ -1,0 +1,28 @@
+---
+import Head from '../components/Head.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  chromeless?: boolean;
+}
+
+const { title, description, image, chromeless = false } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <Head title={title} description={description} image={image} />
+  </head>
+  <body class="flex min-h-screen flex-col font-sans text-ink">
+    {!chromeless && <Nav />}
+    <main class="flex flex-1 flex-col">
+      <slot />
+    </main>
+    {!chromeless && <Footer />}
+  </body>
+</html>
