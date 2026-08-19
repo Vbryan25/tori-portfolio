@@ -1,15 +1,15 @@
 ---
-title: "WebSweep"
+title: "Design System Overhaul"
 excerpt: "Placeholder — case study content coming soon."
-category: "Product Design"
-audience: "B2B"
+category: "Design Systems"
+company: "Proctorio"
 role: "Staff Designer"
 team: "Placeholder — team details coming soon."
-type: "New Product Suite"
+timeline: "2025"
 problem: "Placeholder — problem statement coming soon."
 task: "Placeholder — approach coming soon."
 process: "Placeholder — process notes coming soon."
-heroSrc: "/cover-websweep.svg"
+heroSrc: "/cover-dsoverhaul.svg"
 caseStudy: false
 order: 2
 cardSize: "Wide"
